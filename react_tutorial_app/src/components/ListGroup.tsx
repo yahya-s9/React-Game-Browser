@@ -1,11 +1,29 @@
 // import { Fragment } from "react";
 // <></> below works the same as <Fragment><Fragment/>
 
-import { MouseEvent } from "react";
+// import { MouseEvent } from "react";
+// needed this for the type annotation in our old handle click function
+// which we aren't using anymore.
+
+import { useState } from "react";
  
 function ListGroup () {
 
     const items = ['Marrakech', 'Casablanca', 'Rabat'];
+
+    // // variable that keeps track of the index of the selected variable
+    // let selectedIndex = -1;
+
+    // Hook to tell react our componnet has data that can change over time
+    // so selectedIndex will be a state of the component and not a local variable.
+
+    // selectedIndex initial value is -1.
+    const [selectedIndex, setSelectedIndex] = useState(-1);
+    // const [name, setName] = useState('Yahya');
+
+    // useState itself returns an array where:
+    // arr[0] is the variable (selectedindex for ex)
+    // arr[1] is an updater finction to update the var.
 
     const getMessage = () => {
         // return items.length === 0 ? <p> No items to render </p> : null
@@ -21,7 +39,7 @@ function ListGroup () {
         // now that compiler knows what type of object event is,
         // we can use the dot operator to get any property we want
         // off the event object
-        console.log(event);
+        console.log(event);        
     }
     
     return ( 
@@ -38,11 +56,14 @@ function ListGroup () {
                 list item element, with a key that is also equal to the string in
                 the items array, and an on click property that has a function which prints the item when clicked */}
                 {items.map((item,index) => (
-                <li className="list-group-item" 
+                    // if this items index matches the selected item index, then apply both the 
+                    // listgroupitem class and the active class so its highlighted. If the indices dont match,
+                    // then just apply list-group-item class bc we still want it styled properly
+                <li className={ selectedIndex===index ? 'list-group-item active' : 'list-group-item'} 
                 key={item} 
                 // dont call the function, just pass it in bc 
                 // its going to be called llater, at run time.
-                onClick={handleClick}
+                onClick={() => {setSelectedIndex(index)}}
                 >
                     {item}
                 </li>
