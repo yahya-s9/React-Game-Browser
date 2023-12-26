@@ -5,7 +5,13 @@ import ListGroup from './components/ListGroup';
 
 // putting ur JSX in paranthesese allows u to spread it over multuple lines
 function App () {
-  return <ListGroup/>
+  let items = ['Marrakech', 'Casablanca', 'Rabat'];
+
+  const handleSelectItem = (item: string) => {
+    console.log(item);
+  }
+
+  return <ListGroup items={items} heading="Cities" onSelectItem={handleSelectItem}/>
 }
 
 export default App

@@ -6,10 +6,21 @@
 // which we aren't using anymore.
 
 import { useState } from "react";
- 
-function ListGroup () {
 
-    const items = ['Marrakech', 'Casablanca', 'Rabat'];
+// using type annotation to specify the types of the properties
+// aka defining the structure of the input to the component, 
+// just like how u can pass in arguments to a function
+
+interface ListGroupProps {
+    items: string[];
+    heading: string;
+    onSelectItem: (item: string) => void;
+}
+ 
+function ListGroup ({items, heading, onSelectItem}: ListGroupProps) {
+
+    // instead of hardcoding list of items, will now make it a prop.
+    // const items = ['Marrakech', 'Casablanca', 'Rabat'];
 
     // // variable that keeps track of the index of the selected variable
     // let selectedIndex = -1;
@@ -46,7 +57,7 @@ function ListGroup () {
         // fragment so we can render multiple elements without having to
         // wrap everything around an unnecesary div
         <>
-            <h1>Matesha</h1>
+            <h1>{heading}</h1>
             {/* to accomplish conditional rendering, cant write an if statement so 
             instead have a JS expression embedded with curly braces that will
             return the p tag above if the item list is empty */}
@@ -63,7 +74,10 @@ function ListGroup () {
                 key={item} 
                 // dont call the function, just pass it in bc 
                 // its going to be called llater, at run time.
-                onClick={() => {setSelectedIndex(index)}}
+                onClick={() => {
+                    setSelectedIndex(index);
+                    onSelectItem(item);
+                }}
                 >
                     {item}
                 </li>
